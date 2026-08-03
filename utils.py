@@ -107,17 +107,17 @@ def display_img_manipulations(img_path):
         plt.show()
 
 
-device = "cuda" if torch.cuda.is_available() else "cpu"
-
-model_id = "runwayml/stable-diffusion-v1-5"
-
-pipe = StableDiffusionPipeline.from_pretrained(model_id)
-pipe.to(device)
-
-pipe.scheduler = DDIMScheduler.from_config(pipe.scheduler.config) # Denoising scheduler for reconstruction
-inverse_scheduler = DDIMInverseScheduler.from_config(pipe.scheduler.config) # Inverse scheduler for inversion
-
 def calculate_mse(img: Image.Image, inference_steps):
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+
+        model_id = "runwayml/stable-diffusion-v1-5"
+
+        pipe = StableDiffusionPipeline.from_pretrained(model_id)
+        pipe.to(device)
+
+        pipe.scheduler = DDIMScheduler.from_config(pipe.scheduler.config) # Denoising scheduler for reconstruction
+        inverse_scheduler = DDIMInverseScheduler.from_config(pipe.scheduler.config) # Inverse scheduler for inversion
+
         inverse_scheduler.set_timesteps(inference_steps, device=device) # Setting the amount of timesteps in the inversion process
 
         img = img.convert("RGB").resize((512, 512), Image.Resampling.BICUBIC)
