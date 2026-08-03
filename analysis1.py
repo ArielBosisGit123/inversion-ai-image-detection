@@ -4,7 +4,7 @@ import pandas as pd
 from scipy.stats import mannwhitneyu
 
 RESULTS_CSV_PATH = (
-    r"experiment1/results.csv"
+        r"experiment1/results.csv"
 )
 results_df = pd.read_csv(RESULTS_CSV_PATH)
 
@@ -17,15 +17,13 @@ thresholds = [0.017]
 min_errors = float("inf")
 
 for idx, thresh in enumerate(thresholds):
-    predictions_ai = (mse_scores <= thresh).astype(int)
-    total_errors = (predictions_ai != true_ai).sum()
-    if total_errors < min_errors:
-        min_errors = total_errors
-        best_threshold = thresh
+        predictions_ai = (mse_scores <= thresh).astype(int)
+        total_errors = (predictions_ai != true_ai).sum()
+        if total_errors < min_errors:
+            min_errors = total_errors
+            best_threshold = thresh
 
-print(
-    f"Amount of errors: {min_errors}, threshold: {best_threshold}, accuracy: {100 - 100 * min_errors/num_images}%"
-)
+print(f"Amount of errors: {min_errors}, threshold: {best_threshold}, accuracy: {100 - 100 * min_errors/num_images}%")
 
 # Mann-Whitney U test
 synthetic_group = results_df[results_df["AI"] == 1]["MSE"]
@@ -35,29 +33,29 @@ print(f"p-value: {p_value}")
 
 # p-value asterisks
 if p_value < 0.001:
-    sig_label = "* * *"
+        sig_label = "* * *"
 elif p_value < 0.01:
-    sig_label = "* *"
+        sig_label = "* *"
 elif p_value < 0.05:
-    sig_label = "*"
+        sig_label = "*"
 else:
-    sig_label = "ns"
+        sig_label = "ns"
 
 # Histogram
 plt.figure(figsize=(7, 5))
 plt.hist(
-    mse_scores[true_ai == 0],
-    bins=14,
-    alpha=0.5,
-    color="#4e79a7",
-    label="lsun-bedrooms",
+        mse_scores[true_ai == 0],
+        bins=14,
+        alpha=0.5,
+        color="#4e79a7",
+        label="lsun-bedrooms",
 )
 plt.hist(
-    mse_scores[true_ai == 1],
-    bins=14,
-    alpha=0.5,
-    color="#f28e2c",
-    label="stable-diffusion-v1-5",
+        mse_scores[true_ai == 1],
+        bins=14,
+        alpha=0.5,
+        color="#f28e2c",
+        label="stable-diffusion-v1-5",
 )
 
 

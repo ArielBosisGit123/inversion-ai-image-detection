@@ -17,44 +17,44 @@ categories = df["manipulation"].unique()
 results_summary = []
 
 for cat in categories:
-    subset = df[df["manipulation"] == cat]
-    y_true = subset["AI"].values
-    y_pred = (subset["MSE"].values <= global_threshold).astype(int)
+        subset = df[df["manipulation"] == cat]
+        y_true = subset["AI"].values
+        y_pred = (subset["MSE"].values <= global_threshold).astype(int)
 
-    accuracy = (y_pred == y_true).mean() * 100
-    results_summary.append({"Manipulation": cat, "Accuracy": accuracy})
+        accuracy = (y_pred == y_true).mean() * 100
+        results_summary.append({"Manipulation": cat, "Accuracy": accuracy})
 
 results_df = pd.DataFrame(results_summary)
 
 # Order
 custom_order = [
-    "none",
-    "JPEG-Quality-85", "JPEG-Quality-70",
-    "Blur-Radius-0.5px", "Blur-Radius-1px",
-    "Crop-20%", "Crop-40%",
-    "Rotation-20deg", "Rotation-40deg",
-    "Scale-140%", "Scale-60%"
+        "none",
+        "JPEG-Quality-85", "JPEG-Quality-70",
+        "Blur-Radius-0.5px", "Blur-Radius-1px",
+        "Crop-20%", "Crop-40%",
+        "Rotation-20deg", "Rotation-40deg",
+        "Scale-140%", "Scale-60%"
 ]
 
 results_df["Manipulation"] = pd.Categorical(
-    results_df["Manipulation"], categories=custom_order, ordered=True
+        results_df["Manipulation"], categories=custom_order, ordered=True
 )
 results_df = results_df.sort_values("Manipulation")
 
 # Colors
 color_map = {
-    "none": "#808080",
-    "JPEG": "#4e79a7",
-    "Blur": "#59a14f",
-    "Crop": "#e15759",
-    "Rotation": "#f28e2c",
-    "Scale": "#b07aa1"
+        "none": "#808080",
+        "JPEG": "#4e79a7",
+        "Blur": "#59a14f",
+        "Crop": "#e15759",
+        "Rotation": "#f28e2c",
+        "Scale": "#b07aa1"
 }
 
 def get_color(label):
-    for key in color_map:
-        if key in label: return color_map[key]
-    return "#9c9c9c"
+        for key in color_map:
+                if key in label: return color_map[key]
+        return "#9c9c9c"
 
 bar_colors = [get_color(cat) for cat in results_df["Manipulation"]]
 
@@ -64,9 +64,9 @@ bars = plt.bar(results_df["Manipulation"], results_df["Accuracy"], color=bar_col
 
 # Data labels
 for bar in bars:
-    height = bar.get_height()
-    plt.text(bar.get_x() + bar.get_width()/2, height + 0.5, f"{height:.1f}%",
-             ha="center", va="bottom", fontsize=10)
+        height = bar.get_height()
+        plt.text(bar.get_x() + bar.get_width()/2, height + 0.5, f"{height:.1f}%",
+                ha="center", va="bottom", fontsize=10)
 
 plt.title(f"Manipulation Accuracies (Threshold = {global_threshold:.4f})", fontsize=14)
 plt.ylabel("Accuracy (%)", fontsize=12)
