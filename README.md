@@ -1,9 +1,5 @@
 # AI Image Detection Using Diffusion Inversion
 
-A project for detecting diffusion-generated images using diffusion model inversion and reconstruction error (MSE).
-
-Synthetic images yield lower reconstruction error when inverted and reconstructed by a diffusion model, while natural images yield higher error.
-
 ## Experiments
 
 * **1. White-Box:** Evaluating detection using `stable-diffusion-v1-5`.
