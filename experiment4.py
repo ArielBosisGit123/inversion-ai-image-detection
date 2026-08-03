@@ -1,0 +1,43 @@
+import os
+from PIL import Image
+import pandas as pd
+from utils import calculate_mse
+
+REAL_IMAGES_PATH = r"dataset/real_images"
+SYNTHETIC_IMAGES_PATH = r"dataset/synthetic_images"
+LABELS_CSV_PATH = r"dataset/labels.csv"
+RESULTS_CSV_PATH = r"experiment4/results.csv"
+
+NUM_IMAGES_PER_ORIGIN = 50
+NUM_INFERENCE_STEPS = 25
+
+ORIGIN_NAMES_LIST = ["ddpm-cat-256", "ADM-diffusers", "stable-diffusion-2-1-base", "stable-diffusion-v1-5", "lsun-bedrooms"]
+
+labels_df = pd.read_csv(LABELS_CSV_PATH)
+results_data = []
+
+for origin_name in ORIGIN_NAMES_LIST:
+        for i in range(NUM_IMAGES_PER_ORIGIN):
+                img_name = f"{origin_name}{i}.png"
+
+                if origin_name == "lsun-bedrooms":
+                        img_path = os.path.join(REAL_IMAGES_PATH, img_name)
+                else:
+                        img_path = os.path.join(SYNTHETIC_IMAGES_PATH, img_name)
+
+                img = Image.open(img_path)
+                mse = calculate_mse(img, NUM_INFERENCE_STEPS)
+
+                print(f"[{ORIGIN_NAMES_LIST.index(origin_name) * NUM_IMAGES_PER_ORIGIN + i + 1}/{len(ORIGIN_NAMES_LIST) * NUM_IMAGES_PER_ORIGIN}] '{img_name}' - MSE: {mse:.5f}")
+
+                is_ai = labels_df.loc[labels_df["file_name"].str.contains(img_name), "AI"].to_list()[0] # 0 (real) or 1 (AI)
+
+                results_data.append({
+                        "file_name": img_name,
+                        "AI": is_ai,
+                        "origin_name": origin_name,
+                        "MSE": mse,
+                })
+
+results_df = pd.DataFrame(results_data)
+results_df.to_csv(RESULTS_CSV_PATH, index=False)
