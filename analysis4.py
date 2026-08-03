@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-RESULTS_CSV_PATH = r"/content/drive/MyDrive/inversion-ai-image-detection/experiment4/results.csv"
+RESULTS_CSV_PATH = r"experiment4/results.csv"
 
 results_df = pd.read_csv(RESULTS_CSV_PATH)
 

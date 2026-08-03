@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-RESULTS_CSV_PATH = r"/content/drive/MyDrive/inversion-ai-image-detection/experiment2/results.csv"
+RESULTS_CSV_PATH = r"experiment2/results.csv"
 results_df = pd.read_csv(RESULTS_CSV_PATH)
 
 step_levels = sorted(results_df["steps"].unique())

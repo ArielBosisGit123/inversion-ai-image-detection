@@ -2,7 +2,7 @@ import os
 import pandas as pd
 import matplotlib.pyplot as plt
 
-RESULTS_CSV_PATH = r"/content/drive/MyDrive/inversion-ai-image-detection/experiment3/results.csv"
+RESULTS_CSV_PATH = r"experiment3/results.csv"
 df = pd.read_csv(RESULTS_CSV_PATH, names=["file_name", "AI", "MSE", "manipulation"])
 
 df["MSE"] = pd.to_numeric(df["MSE"], errors='coerce')

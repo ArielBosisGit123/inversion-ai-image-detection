@@ -4,7 +4,7 @@ import pandas as pd
 from scipy.stats import mannwhitneyu
 
 RESULTS_CSV_PATH = (
-    r"/content/drive/MyDrive/inversion-ai-image-detection/experiment1/results.csv"
+    r"experiment1/results.csv"
 )
 results_df = pd.read_csv(RESULTS_CSV_PATH)
 
