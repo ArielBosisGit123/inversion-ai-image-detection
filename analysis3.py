@@ -68,7 +68,7 @@ for bar in bars:
     plt.text(bar.get_x() + bar.get_width()/2, height + 0.5, f"{height:.1f}%",
              ha="center", va="bottom", fontsize=10)
 
-plt.title(f"Manipulation Robustness (Threshold = {global_threshold:.4f})", fontsize=14)
+plt.title(f"Manipulation Accuracies (Threshold = {global_threshold:.4f})", fontsize=14)
 plt.ylabel("Accuracy (%)", fontsize=12)
 plt.ylim(0, 110)
 plt.xticks(rotation=45, ha="right")
