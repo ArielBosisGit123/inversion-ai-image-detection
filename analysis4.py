@@ -78,6 +78,16 @@ for bar, acc in zip(bars, accuracies):
 		ha="center"
 	)
 
+metrics_text = f"Balanced Acc: {bal_acc:.4f}\nF1 Score: {f1:.4f}"
+axes[0].text(
+	0.05, 0.95,
+	metrics_text,
+	transform=axes[0].transAxes,
+	fontsize=11,
+	verticalalignment='top',
+	bbox=dict(boxstyle='round', facecolor='white', alpha=0.8, edgecolor='gray')
+)
+
 # Confusion matrix
 cm = confusion_matrix(y_true, y_pred)
 disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=["Real (0)", "AI (1)"])
